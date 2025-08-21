@@ -450,27 +450,26 @@
     }
 
     async function send() {
-      const q = promptEl.value.trim();
-      if (!q) return;
-      addMsg('user', q);
-      promptEl.value = '';
-
-      const t = addTyping();
-      try {
-        const res = await fetch('https://solvemycar-cx8e68hed-autofixing.vercel.app/api/solve', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ prompt: q })
-        });
-        if (!res.ok) throw new Error('API error');
-        const { html } = await res.json();
-        t.remove();
-        addMsg('ai', html);
-      } catch (error) {
-        t.remove();
-        addMsg('ai', `<div style="color:var(--danger)">Error: ${error.message}. Try again or check connection.</div>`);
-      }
-    }
+  const q = promptEl.value.trim();
+  if (!q) return;
+  addMsg('user', q);
+  promptEl.value = '';
+  const t = addTyping();
+  try {
+    const res = await fetch('https://solvemycar-liwmt6vyq-autofixing.vercel.app/api/solve', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt: q })
+    });
+    if (!res.ok) throw new Error('API error');
+    const { html } = await res.json();
+    t.remove();
+    addMsg('ai', html);
+  } catch (error) {
+    t.remove();
+    addMsg('ai', `<div style="color:var(--danger)">Error: ${error.message}. Try again or check connection.</div>`);
+  }
+}
     sendBtn.addEventListener('click', send);
     promptEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); send(); } });
 
