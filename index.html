@@ -457,6 +457,10 @@
   const t = addTyping();
   try {
     const res = await fetch('https://solvemycar-otwj5e0bt-autofixing.vercel.app/api/solve', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({ prompt: q })
     });
     if (!res.ok) throw new Error('API error');
