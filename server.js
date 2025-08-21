@@ -5,10 +5,13 @@ const app = express();
 const port = process.env.PORT || 3000;
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
-app.use(cors());
+app.use(cors({
+  origin: 'https://abdkhandev.github.io',
+  methods: ['POST'],
+  allowedHeaders: ['Content-Type']
+}));
 app.use(express.json());
 
-// Rate limiting
 const requests = new Map();
 const RATE_LIMIT = 10;
 const WINDOW_MS = 60000;

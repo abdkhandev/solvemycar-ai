@@ -9,7 +9,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    /* ---------- Root + Theme ---------- */
     :root {
       --bg-1: #0b0f14;
       --bg-2: #0f141b;
@@ -55,7 +54,6 @@
       pointer-events: none; mix-blend-mode: overlay; opacity: .6;
     }
 
-    /* ---------- Loader Overlay ---------- */
     .loader { position: fixed; inset: 0; display: grid; place-items: center; background: linear-gradient(180deg, rgba(7,10,14,0.9), rgba(7,10,14,0.85)); z-index: 9999; }
     .loader__card {
       width: min(780px, 92vw);
@@ -91,7 +89,6 @@
     .loader__hint { display: flex; gap: 8px; align-items: center; margin-top: 14px; color: var(--muted); font-size: 14px; }
     .dot { width: 6px; height: 6px; border-radius: 999px; background: var(--accent); box-shadow: 0 0 12px rgba(0,224,255,0.8); }
 
-    /* ---------- App Shell ---------- */
     .app {
       position: relative;
       display: flex;
@@ -139,7 +136,6 @@
       min-height: 0;
     }
 
-    /* ---------- Sidebar ---------- */
     .sidebar {
       padding: 14px;
       display: flex;
@@ -192,7 +188,6 @@
     }
     .meter > div { height: 100%; background: linear-gradient(90deg, var(--accent), #8af0ff); width: 60%; }
 
-    /* ---------- Conversation ---------- */
     .stage {
       display: flex;
       flex-direction: column;
@@ -204,7 +199,7 @@
       padding: 18px;
       overflow-y: auto;
       scroll-behavior: smooth;
-      max-height: calc(100vh - 200px); /* Adjust based on topbar and composer height */
+      max-height: calc(100vh - 200px);
     }
     .msg {
       max-width: 75%;
@@ -246,7 +241,6 @@
     .typing i:nth-child(3) { animation-delay: .3s; }
     @keyframes blink { 0%, 80%, 100% { opacity: .25; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-2px); } }
 
-    /* ---------- Composer ---------- */
     .composer {
       display: flex;
       gap: 10px;
@@ -292,10 +286,8 @@
 
     .hint { font-size: 12px; color: var(--muted); padding: 0 14px 12px; }
 
-    /* ---------- Utilities ---------- */
     .hide { display: none !important; }
 
-    /* ---------- Responsive ---------- */
     @media (max-width: 920px) {
       .chat { flex-direction: column; }
       .sidebar { display: none; }
@@ -304,7 +296,6 @@
   </style>
 </head>
 <body>
-  <!-- Loader Overlay -->
   <div class="loader" id="loader">
     <div class="loader__card">
       <div class="brand">
@@ -330,13 +321,11 @@
     </div>
   </div>
 
-  <!-- App Shell -->
   <main class="app" id="app" aria-live="polite" aria-busy="true">
     <header class="topbar surface">
       <div class="brand">
         <div class="logo" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#0b0f14" stroke-width="1.5" stroke-linecap="round" stroke-joi
-nline="round" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#0b0f14" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/>
             <path d="M19.4 15a7.97 7.97 0 0 0 .1-1 7.97 7.97 0 0 0-.1-1l2-1.5-2-3.5-2.4.6a7.97 7.97 0 0 0-1.7-1l-.4-2.5h-4l-.4 2.5c-.6.2-1.2.5-1.7 1l-2.4-.6-2 3.5 2 1.5a7.97 7.97 0 0 0 0 2l-2 1.5 2 3.5 2.4-.6c.5.4 1.1.8 1.7 1l.4 2.5h4l.4-2.5c.6-.2 1.2-.5 1.7-1l2.4.6 2-3.5-2-1.5Z"/>
             <path d="M21 3l-5 5" />
@@ -354,7 +343,6 @@ nline="round" aria-hidden="true">
     </header>
 
     <section class="chat">
-      <!-- Sidebar -->
       <aside class="sidebar surface" aria-label="Quick tools">
         <div class="card">
           <h4>Quick prompts</h4>
@@ -372,7 +360,6 @@ nline="round" aria-hidden="true">
         </div>
       </aside>
 
-      <!-- Conversation stage -->
       <section class="stage surface" aria-label="Chat conversation">
         <div class="messages" id="messages"></div>
 
@@ -398,7 +385,6 @@ nline="round" aria-hidden="true">
   </main>
 
   <script>
-    // ---------- Loader logic ----------
     const loader = document.getElementById('loader');
     const progressBar = document.getElementById('progressBar');
     const app = document.getElementById('app');
@@ -416,7 +402,6 @@ nline="round" aria-hidden="true">
       }
     }, 250);
 
-    // ---------- Chat elements ----------
     const messages = document.getElementById('messages');
     const promptEl = document.getElementById('prompt');
     const sendBtn = document.getElementById('sendBtn');
@@ -446,7 +431,6 @@ nline="round" aria-hidden="true">
       qp.appendChild(el);
     });
 
-    // ---------- Messaging helpers ----------
     function addMsg(role, html) {
       const m = document.createElement('div');
       m.className = 'msg ' + (role === 'user' ? 'user' : 'ai');
@@ -465,7 +449,6 @@ nline="round" aria-hidden="true">
         <div class="meta">Hint: add vehicle, year, engine size for precision.</div>`);
     }
 
-    // ---------- Send / Receive ----------
     async function send() {
       const q = promptEl.value.trim();
       if (!q) return;
@@ -491,7 +474,6 @@ nline="round" aria-hidden="true">
     sendBtn.addEventListener('click', send);
     promptEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); send(); } });
 
-    // ---------- Voice input (Web Speech API) ----------
     let recognizing = false;
     let rec;
     if ('webkitSpeechRecognition' in window) {
@@ -511,7 +493,6 @@ nline="round" aria-hidden="true">
       micBtn.title = 'Voice not supported on this browser';
     }
 
-    // ---------- File attach preview ----------
     attachBtn.addEventListener('click', () => fileInput.click());
     fileInput.addEventListener('change', (e) => {
       const file = e.target.files?.[0];
