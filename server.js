@@ -7,7 +7,7 @@ const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 app.use(cors({
   origin: 'https://abdkhandev.github.io',
-  methods: ['POST'],
+  methods: ['POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type']
 }));
 app.use(express.json());
